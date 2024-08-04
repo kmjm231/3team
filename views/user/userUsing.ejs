@@ -1,0 +1,54 @@
+<head>
+    <title>사용 중인 기기</title>
+    <style>
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+	.machine {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            width: 150px;
+        }
+        .machine.inactive {
+            background-color: #d3d3d3;
+            color: #555;
+        }
+        .machine span {
+            display: block;
+            margin: 10px 0;
+        }
+        .machine::after {
+            content: attr(data-id);
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">사용 중인 기기</div>
+    <div class="main-content">
+        <% if (reservations.length === 0) { %>
+            <p>사용중인 기기가 없습니다.</p>
+        <% } else { %>
+            <div class="machines-container">
+                <% reservations.forEach((reservation, index) => { %>
+                    <div class="machine <%= reservation.remainingTime ? '' : 'inactive' %>" data-id="<%= reservation.id %>">
+                        <span class="course">기계 종류: <%= reservation.machineType %></span>
+                        <% if (reservation.remainingTime) { %>
+                            <span class="time">잔여 시간: <%= reservation.remainingTime %> 분</span>
+                        <% } %>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+</body>

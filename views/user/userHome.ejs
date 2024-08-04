@@ -1,0 +1,71 @@
+<head>
+    <title>나의 예약 내역</title>
+    <style>
+        .main-content h2 {
+            margin-left: 30px;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        .status-section {
+            display: flex;
+            justify-content: space-around;
+        }
+        .machine-section {
+            width: 50%;
+            float: inline-start;
+            padding: 10px;
+        }
+        .machine {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .machine.yellow {
+            background-color: #FAEC97;
+        }
+        .machine.purple {
+            background-color: #D8CEF6;
+        }
+        .machine span {
+            display: block;
+            margin: 10px 0;
+        }
+        .machine::after {
+            content: attr(data-id);
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+        .left-align {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        나의 예약 내역
+    </div>
+    <div class="main-content">
+        <div id="reserv-status-container">
+            <h2>예약 내역</h2>
+            <% reservations.forEach((reservation, index) => { %>
+                <div class="machine <%= reservation.machineType === 'washer' ? 'purple' : 'yellow' %>" data-id="<%= index + 1 %>">
+                    <span class="left-align">예약 번호 : <%= reservation.reservationNumber %> </span>
+                    <span class="left-align">기계 종류 : <%= reservation.machineType %> </span>
+                    <span class="left-align">기계 번호 : <%= reservation.machineNum %> </span>
+                    <span class="left-align">예약 날짜 : <%= new Date(reservation.reservationDate).toLocaleString('ko-KR') %> </span> 
+                    <!--수정 0610-->
+                    <!-- 예약 시간 정보는 데이터베이스에 없으므로, 해당 필드는 추가하거나 데이터베이스에서 가져와야 합니다. -->
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
