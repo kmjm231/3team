@@ -7,7 +7,7 @@ const express = require("express"),
     homeController = require("./controllers/homeController"), // 메인 로그인
     errorController = require("./controllers/errorController"), // 에러 관련
     subscriberController = require("./controllers/subscriberController"), // 회원가입 및 회원 정보
-    emailController = require("./controllers/emailController"), // 이메일 관련 컨트롤러
+    //emailController = require("./controllers/emailController"), // 이메일 관련 컨트롤러
     machineController = require("./controllers/machineController"),
     reservationController = require("./controllers/reservationController"),
     userHomeController = require("./controllers/userHomeController"),
@@ -24,7 +24,7 @@ const express = require("express"),
     myPageController = require("./controllers/myPageController"), // myPage
     passwordController = require("./controllers/passwordController"), // password
     passwordRoutes = require('./routes/passwordRoutes'), // password
-    emailRoutes = require('./routes/emailRoutes'), // 이메일 관련 라우터
+    //emailRoutes = require('./routes/emailRoutes'), // 이메일 관련 라우터
     reviewReportController = require("./controllers/reviewReportController"), // 리뷰 신고 (관리자용)
     { consumeFromQueue } = require('./rabbitmqConsumer'),
     qnaChatController = require("./controllers/rabbitMQ/rabbitMQ-api"), //문의
@@ -82,16 +82,16 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/email', emailRoutes); // 이메일인증 라우트
+//app.use('/email', emailRoutes); // 이메일인증 라우트
 
 // 라우트 등록
 app.get("/subscribers/getSubscriber", subscriberController.getAllSubscribers);
 app.get("/subscribers/subscriber", subscriberController.getSubscriptionPage); // 폼 입력이 가능한 웹 페이지 렌더링
 app.post("/subscribers/subscriber", subscriberController.saveSubscriber); // 넘겨받은 POST 데이터 저장 및 처리
 
-app.post('/send-verification-code', emailController.sendVerificationCode); // 이메일 인증 코드 전송
-app.post('/verify-code', emailController.verifyCode); // 이메일 인증 코드 검증
-app.get('/verification', (req, res) => res.render('verification')); // 이메일 인증 페이지
+//app.post('/send-verification-code', emailController.sendVerificationCode); // 이메일 인증 코드 전송
+//app.post('/verify-code', emailController.verifyCode); // 이메일 인증 코드 검증
+//app.get('/verification', (req, res) => res.render('verification')); // 이메일 인증 페이지
 
 app.post('/logout', usersController.logout);
 app.post('/deleteAccount', usersController.deleteAccount);
