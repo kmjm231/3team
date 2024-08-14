@@ -25,79 +25,54 @@
         [type="radio"], span {
             vertical-align: middle;
         }
+        .email-auth-group {
+            display: flex;
+            align-items: center;
+        }
+        .email-auth-group input[type="text"] {
+            flex-grow: 1;
+        }
+        .email-auth-group button {
+            margin-left: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        #authCodeGroup {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
     <script>
-        async function handleSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('sendAuthCodeBtn').addEventListener('click', function() {
+                const email = document.getElementById('email').value;
 
-            // 회원가입 요청
-            const response = await fetch('/subscribers/save-subscriber', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                if (!email) {
+                    alert("이메일을 입력하세요.");
+                    return;
+                }
+
+                // 이메일 인증 코드 전송 요청
+                fetch('/subscribers/send-auth-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        // 인증 코드 입력 칸을 표시
+                        document.getElementById('authCodeGroup').style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             });
-
-            const result = await response.text();
-
-            if (response.status === 200) {
-                alert(result);
-                window.location.href = '/'; // 회원가입 완료 후 리다이렉트
-            } else {
-                alert(`회원가입 오류: ${result}`);
-            }
-        }
-
-        async function handleVerify(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-
-            // 인증 코드 확인 요청
-            const response = await fetch('/email/verify-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            const result = await response.text();
-
-            if (response.status === 200) {
-                alert('인증이 성공적으로 완료되었습니다.');
-                document.getElementById('verification-section').style.display = 'none'; // 인증 완료 후 인증 섹션 숨기기
-            } else {
-                alert(`인증 오류: ${result}`);
-            }
-        }
-
-        async function sendVerificationCode(event) {
-            event.preventDefault();
-            const email = document.querySelector('input[name="email"]').value;
-
-            const response = await fetch('/email/send-verification-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email })
-            });
-
-            const result = await response.text();
-
-            if (response.status === 200) {
-                alert('인증 코드가 이메일로 전송되었습니다.');
-                document.getElementById('verification-section').style.display = 'block';
-            } else {
-                alert(`인증 코드 전송 오류: ${result}`);
-            }
-        }
+        });
     </script>
 </head>
 <body>
@@ -112,7 +87,14 @@
                 <label for="roleAdmin">Admin</label>
             </div>
             <input type="text" name="name" placeholder="이름" required autocomplete="off">
-            <input type="text" name="email" placeholder="이메일" required autocomplete="off">
+            <div class="email-auth-group">
+                <input type="text" name="email" id="email" placeholder="이메일" required autocomplete="off">
+                <button type="button" id="sendAuthCodeBtn">인증</button>
+            </div>
+
+            <div id="authCodeGroup">
+                <input type="text" name="authCode" placeholder="인증 코드" autocomplete="off">
+            </div>
             <input type="password" name="password" placeholder="비밀번호" required autocomplete="off">
             <input type="text" name="phoneNumber" placeholder="전화번호" autocomplete="off">
             <input type="text" name="cardNumber" placeholder="카드번호 (0000-0000-0000-0000)" autocomplete="off">
