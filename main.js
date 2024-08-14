@@ -88,6 +88,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/subscribers/getSubscriber", subscriberController.getAllSubscribers);
 app.get("/subscribers/subscriber", subscriberController.getSubscriptionPage); // 폼 입력이 가능한 웹 페이지 렌더링
 app.post("/subscribers/subscriber", subscriberController.saveSubscriber); // 넘겨받은 POST 데이터 저장 및 처리
+app.post('/subscribers/send-auth-code', subscriberController.sendAuthCode); // 이메일 인증 코드 전송 라우트
 
 //app.post('/send-verification-code', emailController.sendVerificationCode); // 이메일 인증 코드 전송
 //app.post('/verify-code', emailController.verifyCode); // 이메일 인증 코드 검증
