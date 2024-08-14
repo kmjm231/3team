@@ -43,19 +43,6 @@ db.qnaChat.belongsTo(db.branch, {
 
 db.favorites = require("./favorites.js")(sequelize, Sequelize);
 
-// 모델 간의 관계 정의 (Associations)
-db.branch.hasMany(db.review, { foreignKey: 'branchID', as: 'reviews' });
-db.review.belongsTo(db.branch, { foreignKey: 'branchID', as: 'branch' });
-
-db.machine.hasMany(db.reservation, { foreignKey: 'machineID', as: 'reservations' });
-db.reservation.belongsTo(db.machine, { foreignKey: 'machineID', as: 'machine' });
-
-db.machine.belongsTo(db.branch, { foreignKey: 'branchID', as: 'branch' });
-db.branch.hasMany(db.machine, { foreignKey: 'branchID', as: 'machines' });
-
-db.reservation.belongsTo(db.subscriber, { foreignKey: 'subscriberID', as: 'subscriber' });
-db.subscriber.hasMany(db.reservation, { foreignKey: 'subscriberID', as: 'reservations' });
-
-db.favorites.belongsTo(db.review, { foreignKey: 'reviewID', as: 'review' });
+db.favorites.belongsTo(db.Review, { foreignKey: 'reviewID', as: 'review1' });
 
 module.exports = db;
