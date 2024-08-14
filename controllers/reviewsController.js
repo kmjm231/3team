@@ -95,6 +95,8 @@ exports.deleteReview = async (req, res) => {
         await Review.destroy({where: { id: reviewId }});
         req.flash('success', 'Review deleted successfully.');
         res.redirect('/reviews/getReviews');
+        }
+        };
 // 찜 추가/삭제 함수
 exports.addFavorites = async (req, res) => {
     // 로그인된 사용자의 정보를 가져옵니다.
@@ -163,4 +165,3 @@ exports.reportReview = async (req, res) => {
     }
 };
 
-};
