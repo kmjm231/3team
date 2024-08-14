@@ -95,7 +95,10 @@ exports.deleteReview = async (req, res) => {
         await Review.destroy({where: { id: reviewId }});
         req.flash('success', 'Review deleted successfully.');
         res.redirect('/reviews/getReviews');
-        }
+        } catch (err) {
+                 req.flash('error', 'An error occurred while deleting the review.');
+                 res.redirect('/reviews/getReviews');
+             }
         };
 // 찜 추가/삭제 함수
 exports.addFavorites = async (req, res) => {
