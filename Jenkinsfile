@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "your-dockerhub-username/node-app:${env.BUILD_NUMBER}"
-        DOCKER_REGISTRY = "your-dockerhub-username"
+        DOCKER_IMAGE = "kmjm231/3team:${env.BUILD_NUMBER}"
+        DOCKER_REGISTRY = "kmjm231"
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-repo/node-app.git'
+                git url: 'https://github.com/kmjm231/3team.git', credentialsId: 'kmjm231'
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
+                withDockerRegistry([credentialsId: 'kmjm231']) {
                     sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
