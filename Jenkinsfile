@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kmjm231/3team:${env.BUILD_NUMBER}"
+        DOCKER_IMAGE = "kmjm231/open:${env.BUILD_NUMBER}"
         DOCKER_REGISTRY = "kmjm231"
         LOCATION = 'asia-northeast3-a'
         CREDENTIALS_ID = '5aa566b2-2399-455d-8545-158521642adc'
