@@ -36,8 +36,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 withDockerRegistry([url: 'https://registry.hub.docker.com', credentialsId: 'kmjm231']) {
-                    sh 'docker push ${DOCKER_IMAGE}:latest'
-                    sh 'docker push ${DOCKER_IMAGE}:${env.BUILD_NUMBER}'
+                    sh 'docker login -u ${DOCKER_REGISTRY} -p password0'
+                    sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
         }
