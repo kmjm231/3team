@@ -1,5 +1,5 @@
 # 첫 번쨰 스테이지: 애플리케이션 코드와 의존성 설치
-FROM node:18
+FROM node:18 AS builder
 
 # 환경변수 설정
 ENV NODE_ENV="production"
