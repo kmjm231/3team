@@ -33,7 +33,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([url: 'https://index.docker.io/v1/', credentialsId: 'kmjm231']) {
+                withDockerRegistry([credentialsId: 'kmjm231']) {
                     sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
