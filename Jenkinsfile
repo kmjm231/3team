@@ -2,8 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kmjm231/3team:${env.BUILD_NUMBER}"
+        DOCKER_IMAGE = "kmjm231/open:${env.BUILD_NUMBER}"
         DOCKER_REGISTRY = "kmjm231"
+        LOCATION = 'asia-northeast3-a'
+        CREDENTIALS_ID = '5aa566b2-2399-455d-8545-158521642adc'
     }
 
     stages {
@@ -33,12 +35,15 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([url: 'https://index.docker.io/v1/', credentialsId: 'kmjm231']) {
+                withDockerRegistry([url: 'https://registry.hub.docker.com', credentialsId: 'kmjm231']) {
+                    sh 'docker login -u ${DOCKER_REGISTRY} -p password0'
                     sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
         }
     }
+
+
 
     post {
         success {
