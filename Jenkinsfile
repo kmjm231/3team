@@ -15,6 +15,13 @@ pipeline {
             }
         }
 
+        stage('Check Directory Structure') {
+            steps {
+                sh 'ls -R' // 전체 디렉토리와 파일 구조 출력
+            }
+        }
+
+
         stage('Install Dependencies') {
             steps {
                 dir('app') {
