@@ -5,7 +5,7 @@ FROM node:18 AS builder
 ENV NODE_ENV="production"
 
 # 애플리케이션 소스 복사
-COPY . /app
+COPY app/package*.json /app
 
 # 작업 디렉토리 설정
 WORKDIR /app
