@@ -2,41 +2,19 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kmjm231/open:${env.BUILD_NUMBER}"
-        DOCKER_REGISTRY = "kmjm231"
+        DOCKER_IMAGE = "kmjm231/open:${env.BUILD_NUMBER}" // 이미지 이름과 태그
+        DOCKER_REGISTRY = "kmjm231" // 도커 허브 사용자 이름
         LOCATION = 'asia-northeast3-a'
-        CREDENTIALS_ID = '5aa566b2-2399-455d-8545-158521642adc'
+        CREDENTIALS_ID = '5aa566b2-2399-455d-8545-158521642adc' // 도커 허브 인증 아이디
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git url: 'https://github.com/kmjm231/3team.git', credentialsId: 'kmjm231'
-            }
-        }
+        stage("Checkout code") {
+			steps {
+				checkout scm
+			}
+		}
 
-        stage('Check Directory Structure') {
-            steps {
-                sh 'ls -R' // 전체 디렉토리와 파일 구조 출력
-            }
-        }
-
-
-        stage('Install Dependencies') {
-            steps {
-                dir('app') {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                dir('app') {
-                    sh 'npm test'
-                }
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
