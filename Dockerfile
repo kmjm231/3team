@@ -19,7 +19,7 @@ COPY ./app /Bubble/app
 
 WORKDIR /Bubble/app
 
-# 포트 설정
+# 포트 설정.
 ENV PORT 5000
 EXPOSE 5000
 
